@@ -1,0 +1,11 @@
+<DProject>
+ <ProjectGuid>02d13c48-7c90-4a8d-9ef7-e25beef6e098</ProjectGuid>
+ <Config name="Debug">
+  <!-- default to defaults -->
+ </Config>
+ <Config name="Release">
+  </Config>
+ <Folder name="content">
+  <File path="main.d" />
+ </Folder>
+</DProject>
