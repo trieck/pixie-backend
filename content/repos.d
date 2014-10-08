@@ -1,0 +1,5 @@
+module repos;
+
+class Repository
+{
+}

@@ -1,0 +1,5 @@
+module index;
+
+class Index
+{
+}
