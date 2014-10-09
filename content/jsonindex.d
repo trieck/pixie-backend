@@ -6,6 +6,14 @@ import index;
 
 class JSONIndexer 
 {
+public:
+    this() {
+        repos = Repository.instance();
+    }
+
+    void load(string db) {
+    }
+
 private:
     Repository repos;   // repository instance
     Index index;        // index instance
