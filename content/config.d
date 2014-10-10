@@ -9,16 +9,17 @@ import std.c.process;
 class Config {
 public:
     this() {
-        _content = to!string(read("content.json"));
+        auto content = to!string(read("content.json"));
+        _json = parseJSON(content).object;
     }
 
     string getProperty(string k) {
-        return "";
+        return _json[k].str;
     }
 
-    int getIntProperty(string k) {
-        return 0;
+    long getIntProperty(string k) {
+        return _json[k].integer;
     }
 private:
-    string _content;
+    JSONValue _json;
 }
