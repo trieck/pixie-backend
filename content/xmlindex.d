@@ -27,8 +27,14 @@ public:
 private:
     void loadfiles(string[] files) {
         foreach (file; files) {
-            ;
+            loadfile(file);
+            _filenum++;
         }
+    }
+
+    void loadfile(string file) {
+        this.position = 0;
+        parse(file);
     }
 
     string[] expand(string dir) {

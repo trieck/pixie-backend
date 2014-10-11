@@ -383,6 +383,7 @@
  <Folder name="content">
   <File path="config.d" />
   <File path="index.d" />
+  <File path="pbread.d" />
   <File path="xmlindex.d" />
   <File path="qparse.d" />
   <File path="main.d" />
