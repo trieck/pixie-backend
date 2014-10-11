@@ -18,7 +18,7 @@ int main(string[] argv)
         JSONIndexer indexer = new JSONIndexer;
         indexer.load(argv[1]);
     } catch (Exception e) {
-        stderr.writeln(e);
+        stderr.writeln(e.msg);
         exit(2);
     }
 
