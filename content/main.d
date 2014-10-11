@@ -1,6 +1,6 @@
 import std.stdio;
 import std.c.process;
-import jsonindex;
+import xmlindex;
 import timer;
 
 import std.file;
@@ -15,7 +15,7 @@ int main(string[] argv)
     Timer t = new Timer;
 
     try {
-        JSONIndexer indexer = new JSONIndexer;
+        XMLIndexer indexer = new XMLIndexer;
         indexer.load(argv[1]);
     } catch (Exception e) {
         stderr.writeln(e.msg);

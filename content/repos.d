@@ -16,16 +16,6 @@ public:
         return _instance;
     }
 
-    string getPath() {
-        auto repos = _config.getProperty("content.repos");
-        if (repos.length == 0)
-            throw new Exception("content.repos not set.");
-
-        checkRepos(repos);
-
-        return repos;
-    }
-
     string mapPath(string db) {
         auto repos = getPath();
 
@@ -53,6 +43,16 @@ public:
 private:
     this() {
         _config = new Config;
+    }
+
+    string getPath() {
+        auto repos = _config.getProperty("content.repos");
+        if (repos.length == 0)
+            throw new Exception("content.repos not set.");
+
+        checkRepos(repos);
+
+        return repos;
     }
 
     void checkRepos(string dir) {
