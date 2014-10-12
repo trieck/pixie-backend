@@ -1,25 +1,22 @@
 module pbread;
 
-import std.stdio;
-import std.c.stdio;
+import bufread;
 
-class PushbackReader
+class PushbackReader : BufferedReader
 {
 public:
     this(string filename) {
-        _file = File(filename);
+        super(filename);
+        _pos = BUFFER_SIZE;
     }
 
     /**
     * Read a single character
     * @return the character read, or -1 if the end of stream has been reached
     */
-    int read() {
-        if (_pos == _read) {
-            _read = fread(_buffer.ptr, char.sizeof, _buffer.length, _file.getFP());
-            if (_read == 0)
-                return -1;  // EOF
-            _pos = 0;
+    override int read() {
+        if (_pos == BUFFER_SIZE) {
+            return super.read();
         }
 
         return _buffer[_pos++];
@@ -37,15 +34,13 @@ public:
     }
 
     void unread(char[] buffer, int start, int length) {
-        for (int i = start; i < length; ++i) {
+        for (int i = start + (length-1); i >= start; --i) {
             unread(buffer[i]);
         }
     }
 
 private:
-    enum { BUFFER_SIZE = 8192 };    // buffer size
+    enum { BUFFER_SIZE = 100 };     // pushback buffer size
     char _buffer[BUFFER_SIZE];      // pushback buffer
-    File _file;                     // file structure
     size_t _pos;                    // current position in buffer
-    size_t _read;                   // size of last buffer read
 }

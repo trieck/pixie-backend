@@ -24,6 +24,16 @@ public:
         loadfiles(files);
     }
 
+    override void value(string value) {
+        ;
+    }
+
+    override void startElement(string name, string tag) {
+    }
+
+    override void endElement() {
+    }
+
 private:
     void loadfiles(string[] files) {
         foreach (file; files) {
