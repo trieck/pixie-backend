@@ -1,5 +1,6 @@
 module qparse;
 
+import io.reader;
 import io.pbread;
 
 /**
@@ -12,8 +13,8 @@ import io.pbread;
 abstract class QParser
 {
 public:
-    void parse(string filename) {
-        _reader = new PushbackReader(filename);
+    void parse(Reader reader) {
+        _reader = new PushbackReader(reader);
         parse();
     }
 
@@ -58,7 +59,7 @@ protected:
     @property size_t position;   // position in input stream
 private:    
     void parse() {
-        int c, save;
+        int c;
         char[] buffer;
         string tag, name;
 
@@ -73,10 +74,8 @@ private:
 
             switch (buffer[0]) {
                 case '/':   // end tag
-                    save = _type;
                     endTag();
-                    if (save == BEGINTAG)
-                        endElement();
+                    endElement();
                     break;
                 case '!':   // xml comment
                     if (buffer[1] == '-' && buffer[2] == '-') {

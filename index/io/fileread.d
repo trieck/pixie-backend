@@ -1,9 +1,10 @@
-module io.bufread;
+module io.fileread;
 
 import std.stdio;
 import std.c.stdio;
+import io.reader;
 
-class BufferedReader
+class FileReader : Reader
 {
 public:
     this(string filename) {
@@ -15,7 +16,7 @@ public:
     * Read a single character
     * @return the character read, or -1 if the end of stream has been reached
     */
-    int read() {
+    override int read() {
         if (_pos == _read || _read == 0) {
             _read = fread(_buffer.ptr, char.sizeof, BUFFER_SIZE, _file.getFP());
             if (_read == 0)

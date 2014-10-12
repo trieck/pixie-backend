@@ -6,7 +6,8 @@ import std.conv;
 import std.stdio;
 import std.c.process;
 
-class Config {
+class Config 
+{
 public:
     this() {
         auto content = to!string(read("content.json"));

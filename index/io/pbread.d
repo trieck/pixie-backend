@@ -1,12 +1,12 @@
 module io.pbread;
 
-import io.bufread;
+import io.reader;
 
-class PushbackReader : BufferedReader
+class PushbackReader : Reader
 {
 public:
-    this(string filename) {
-        super(filename);
+    this(Reader reader) {
+        super(reader);
         _pos = BUFFER_SIZE;
     }
 
@@ -40,7 +40,7 @@ public:
     }
 
 private:
-    enum { BUFFER_SIZE = 100 };     // pushback buffer size
+    enum { BUFFER_SIZE = 256 };     // pushback buffer size
     char _buffer[BUFFER_SIZE];      // pushback buffer
     size_t _pos;                    // current position in buffer
 }

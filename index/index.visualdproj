@@ -381,14 +381,17 @@
   <filesToClean>*.obj;*.cmd;*.build;*.json;*.dep</filesToClean>
  </Config>
  <Folder name="index">
-  <File path="io\bufread.d" />
   <File path="config.d" />
+  <File path="io\fileread.d" />
   <File path="index.d" />
+  <File path="lexer.d" />
   <File path="main.d" />
   <File path="io\pbread.d" />
   <File path="qparse.d" />
+  <File path="io\reader.d" />
   <File path="repos.d" />
   <File path="util\timer.d" />
+  <File path="io\tokenizer.d" />
   <File path="xmlindex.d" />
  </Folder>
 </DProject>
