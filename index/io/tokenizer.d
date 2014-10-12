@@ -46,7 +46,7 @@ protected:
 
         char c;
         for (size_t i = 0; i < m; ++i) {
-            c = _buffer[m - i - 1];
+            c = _buffer[_buffer.length - 1 - i];
             _reader.unread(c);
             _buffer.length--;
         }

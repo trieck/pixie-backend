@@ -396,6 +396,7 @@
   <File path="io\reader.d" />
   <File path="repos.d" />
   <File path="io\strread.d" />
+  <File path="io\tempfile.d" />
   <File path="util\timer.d" />
   <File path="io\tokenizer.d" />
   <File path="xmlindex.d" />

@@ -1,5 +1,6 @@
 module inverter;
 
+import std.stdio: FILE;
 import invrecs;
 import util.prime;
 
@@ -21,6 +22,11 @@ public:
 
     bool isFull() {
         return _count >= MAX_COUNT;
+    }
+
+    void write(FILE* stream) {
+        compact();
+        sort();
     }
 
 private:
