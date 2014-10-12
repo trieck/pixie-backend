@@ -11,16 +11,19 @@ import index;
 import qparse;
 import lexer;
 import anchor;
+import indexfields;
 
 class XMLIndexer : QParser
 {
 public:
     this() {
         _repos = Repository.instance();
-        elements = [];
+        _elements = [];
     }
 
-    void load(string db) {
+    void load(string db, string[] fields) {
+        _fields = new IndexFields(fields);    // top-level index fields
+
         auto dir = _repos.mapPath(db);
         auto files = expand(dir);
         if (files.length == 0) {
@@ -29,6 +32,7 @@ public:
         }
         _index = new Index;
         loadfiles(files);
+        _index.write(db, _fields);
     }
 
     override void value(string text) {
@@ -37,7 +41,7 @@ public:
         if (text.length == 0)
             return; // whitespace
 
-        auto field = elements[$-1];
+        auto field = _elements[$-1];
 
         Lexer lexer = new Lexer(new StringReader(text));
         ulong anchor;
@@ -51,14 +55,14 @@ public:
     }
 
     override void startElement(string name, string tag) {
-       elements ~= name;
+        _elements ~= name;
         if (name == "record") {
             _offset = cast(uint) max(0, position - tag.length);
         }
     }
 
     override void endElement() {
-       --elements.length;
+       --_elements.length;
     }
 
 private:
@@ -85,9 +89,10 @@ private:
         return files;
     }
 
-    Repository _repos;  // repository instance
-    Index _index;       // index instance
-    ushort _filenum;    // current file number while indexing
-    uint _offset;       // offset into current file
-    string[] elements;  // stack of elements seen
+    Repository _repos;      // repository instance
+    Index _index;           // index instance
+    ushort _filenum;        // current file number while indexing
+    uint _offset;           // offset into current file
+    string[] _elements;     // stack of elements seen
+    IndexFields _fields;    // set of top-level fields for indexing
 }

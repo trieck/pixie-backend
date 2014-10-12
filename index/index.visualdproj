@@ -385,8 +385,11 @@
   <File path="concord.d" />
   <File path="config.d" />
   <File path="io\fileread.d" />
+  <File path="util\hash32.d" />
   <File path="index.d" />
+  <File path="indexfields.d" />
   <File path="inverter.d" />
+  <File path="invrec.d" />
   <File path="invrecs.d" />
   <File path="lexer.d" />
   <File path="main.d" />

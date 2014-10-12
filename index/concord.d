@@ -24,6 +24,12 @@ public:
         _block.insert(term, anchor);        
     }
 
+    string merge() {
+        blockSave();
+
+        return "";
+    }
+
 private:
     bool isFull() {
         return _block.isFull();

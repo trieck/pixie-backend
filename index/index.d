@@ -2,6 +2,7 @@ module index;
 
 import concord;
 import repos;
+import indexfields;
 
 class Index
 {
@@ -13,6 +14,11 @@ public:
 
     void insert(string term, ulong anchor) {
         _concord.insert(term, anchor);
+    }
+
+    void write(string db, IndexFields fields) {
+        // merge concordance blocks
+        string concordFile = _concord.merge();
     }
 
 private:

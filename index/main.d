@@ -7,8 +7,8 @@ import std.file;
 
 int main(string[] argv)
 {    
-    if (argv.length < 2) {
-        stderr.writeln("usage: index database");
+    if (argv.length < 3) {
+        stderr.writeln("usage: index database fields");
         exit(1);
     }
 
@@ -16,7 +16,7 @@ int main(string[] argv)
 
     try {
         XMLIndexer indexer = new XMLIndexer;
-        indexer.load(argv[1]);
+        indexer.load(argv[1], argv[2..$]);
     } catch (Exception e) {
         stderr.writeln(e.msg);
         exit(2);

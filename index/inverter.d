@@ -3,17 +3,29 @@ module inverter;
 import std.stdio: FILE;
 import invrecs;
 import util.prime;
+import util.hash32;
 
 class Inverter
 {
 public:
     this() {
-        _size = Prime.prime(MAX_COUNT);
+        _size = cast(uint)Prime.prime(MAX_COUNT);
         _count = 0;
     }
 
     void insert(string term, ulong anchor) {
-        ;
+        if (_records is null) {
+            alloc();
+        }
+
+        uint i = lookup(term);
+
+        if (_records.isEmpty(i)) {
+            _records.put(i, term);
+            _count++;
+        }
+
+        _records.insert(i, anchor);
     }
 
     uint getCount() {
@@ -27,6 +39,8 @@ public:
     void write(FILE* stream) {
         compact();
         sort();
+
+        // TODO: 
     }
 
 private:
@@ -43,8 +57,23 @@ private:
         _count = 0;
     }
 
+    void alloc() {
+        _records = InverterRecs.allocate(_size);
+    }
+
+    uint lookup(string term) {
+
+        uint i = (Hash32.hash(term) & 0x7FFFFFFF) % _size;
+
+        while (!_records.isEmpty(i) && _records.getTerm(i) != term) {
+            i = (i + 1) % _size;
+        }
+        
+        return i;
+    }
+
     enum { MAX_COUNT = 100000 } // max. number of index records
     InverterRecs _records;      // hash table of records
     uint _count;                // number of records in table
-    ulong _size;                // size of hash table, should be prime
+    uint _size;                 // size of hash table, should be prime
 }
