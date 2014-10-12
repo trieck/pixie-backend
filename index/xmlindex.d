@@ -5,9 +5,12 @@ import std.json;
 import std.algorithm;
 import std.string;
 import io.fileread;
+import io.strread;
 import repos;
 import index;
 import qparse;
+import lexer;
+import anchor;
 
 class XMLIndexer : QParser
 {
@@ -28,19 +31,29 @@ public:
         loadfiles(files);
     }
 
-    override void value(string value) {
-        value = strip(value);
+    override void value(string text) {
+        text = strip(text);
 
-        if (value.length == 0)
+        if (text.length == 0)
             return; // whitespace
 
         auto field = elements[$-1];
+
+        Lexer lexer = new Lexer(new StringReader(text));
+        ulong anchor;
+
+        string term, tok;
+        for (ushort i = 0; ((tok = lexer.getToken()).length) != 0; ++i) {
+            term = format("%s:%s", field, tok);
+            anchor = Anchor.makeAnchorID(_filenum, _offset, i);
+            _index.insert(term, anchor);
+        }
     }
 
     override void startElement(string name, string tag) {
        elements ~= name;
         if (name == "record") {
-            _offset = max(0, position - tag.length);
+            _offset = cast(uint) max(0, position - tag.length);
         }
     }
 
@@ -75,6 +88,6 @@ private:
     Repository _repos;  // repository instance
     Index _index;       // index instance
     ushort _filenum;    // current file number while indexing
-    size_t _offset;     // offset into current file
+    uint _offset;       // offset into current file
     string[] elements;  // stack of elements seen
 }
