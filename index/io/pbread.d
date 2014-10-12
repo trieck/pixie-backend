@@ -1,6 +1,6 @@
-module pbread;
+module io.pbread;
 
-import bufread;
+import io.bufread;
 
 class PushbackReader : BufferedReader
 {

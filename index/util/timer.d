@@ -1,4 +1,4 @@
-module timer;
+module util.timer;
 
 import std.datetime;
 import std.string : format;

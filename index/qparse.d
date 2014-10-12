@@ -1,6 +1,6 @@
 module qparse;
 
-import pbread;
+import io.pbread;
 
 /**
 * Simple abstract "Quick & Dirty" SAX-like XML parser

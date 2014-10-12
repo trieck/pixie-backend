@@ -1,4 +1,4 @@
-module bufread;
+module io.bufread;
 
 import std.stdio;
 import std.c.stdio;

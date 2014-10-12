@@ -42,7 +42,7 @@
   <pic>0</pic>
   <cov>0</cov>
   <nofloat>0</nofloat>
-  <Dversion>2.043</Dversion>
+  <Dversion>2</Dversion>
   <ignoreUnsupportedPragmas>0</ignoreUnsupportedPragmas>
   <compiler>0</compiler>
   <otherDMD>0</otherDMD>
@@ -380,15 +380,15 @@
   <postBuildCommand />
   <filesToClean>*.obj;*.cmd;*.build;*.json;*.dep</filesToClean>
  </Config>
- <Folder name="content">
-  <File path="bufread.d" />
+ <Folder name="index">
+  <File path="io\bufread.d" />
   <File path="config.d" />
   <File path="index.d" />
   <File path="main.d" />
-  <File path="pbread.d" />
+  <File path="io\pbread.d" />
   <File path="qparse.d" />
   <File path="repos.d" />
-  <File path="timer.d" />
+  <File path="util\timer.d" />
   <File path="xmlindex.d" />
  </Folder>
 </DProject>

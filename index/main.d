@@ -1,14 +1,14 @@
 import std.stdio;
 import std.c.process;
 import xmlindex;
-import timer;
+import util.timer;
 
 import std.file;
 
 int main(string[] argv)
 {    
     if (argv.length < 2) {
-        stderr.writeln("usage: content database");
+        stderr.writeln("usage: index database");
         exit(1);
     }
 
