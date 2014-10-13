@@ -21,6 +21,5 @@ public:
 
         return cmp(this._term, that._term);
     }
-
 }
 

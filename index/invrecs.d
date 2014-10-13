@@ -43,6 +43,9 @@ public:
     }
 
     void clear() {
+        for (size_t i = 0; i < _size; i++) {
+            _records[i] = null;
+        }
     }
 
     bool isEmpty(uint index) {
@@ -51,6 +54,10 @@ public:
 
     string getTerm(uint index) {
         return _records[index]._term;
+    }
+
+    ulong[] getAnchors(uint index) {
+        return _records[index]._buffer;
     }
 
     void put(uint index, string term) {
@@ -77,5 +84,5 @@ public:
 
 private:
     InverterRecord[] _records;
-    int _size;   // size of table, should be prime
+    size_t _size;   // size of table, should be prime
 }

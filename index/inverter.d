@@ -1,9 +1,10 @@
 module inverter;
 
-import std.stdio: FILE;
+import std.stdio;
 import invrecs;
 import util.prime;
 import util.hash32;
+import io.dostream;
 
 class Inverter
 {
@@ -36,11 +37,29 @@ public:
         return _count >= MAX_COUNT;
     }
 
+    string term;
+    ulong[] anchors;
+
     void write(FILE* stream) {
         compact();
         sort();
 
-        // TODO: 
+        DataOutputStream dos = new DataOutputStream(stream);
+
+        for (auto i = 0; i < _count; ++i) {
+            term = _records.getTerm(i);
+            anchors = _records.getAnchors(i);
+
+            dos.writeUTF(term);
+            dos.writeInt(cast(int)anchors.length);  // size of anchor list
+
+            foreach(anchor; anchors) {
+                dos.writeLong(anchor);
+            }
+        }
+
+        fflush(stream);
+        clear();
     }
 
 private:

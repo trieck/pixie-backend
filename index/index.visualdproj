@@ -384,6 +384,7 @@
   <File path="anchor.d" />
   <File path="concord.d" />
   <File path="config.d" />
+  <File path="io\dostream.d" />
   <File path="io\fileread.d" />
   <File path="util\hash32.d" />
   <File path="index.d" />
