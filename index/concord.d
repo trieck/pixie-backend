@@ -1,6 +1,7 @@
 module concord;
 
 import std.stdio : File;
+import std.file : remove;
 import io.tempfile;
 import inverter;
 
@@ -10,9 +11,6 @@ public:
     this() {
         _block = new Inverter;
         _tempfiles = [];
-    }
-
-    ~this() {
     }
 
     void insert(string term, ulong anchor) {
@@ -26,6 +24,14 @@ public:
 
     string merge() {
         blockSave();
+
+        scope(exit) {
+            foreach(file; _tempfiles) {
+                file.close();
+                remove(file.name());
+            }
+            _tempfiles.length = 0;
+        }
 
         return "";
     }

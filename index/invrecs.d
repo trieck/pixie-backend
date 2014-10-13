@@ -1,5 +1,6 @@
 module invrecs;
 
+import std.algorithm;
 import invrec;
 
 class InverterRecs
@@ -15,10 +16,30 @@ public:
         return recs;
     }
 
-    void compact() {        
+    void compact() {
+        for (size_t i = 0, j = 0; i < _records.length; i++) {
+            if (_records[i] !is null) {
+                continue;
+            }
+
+            for (; j < _records.length; j++) {
+                if (j > i && _records[j] !is null) {
+                    break;
+                }
+            }
+
+            if (j >= _records.length) {
+                break;
+            }
+
+            _records[i] = _records[j];
+            _records[j] = null;
+        }
     }
 
+    // must be compacted first
     void sort(uint count) {
+        _records[0..count].sort;
     }
 
     void clear() {
@@ -29,21 +50,20 @@ public:
     }
 
     string getTerm(uint index) {
-        return _records[index].term;
+        return _records[index]._term;
     }
 
     void put(uint index, string term) {
         assert (_records[index] is null);
 
         _records[index] = new InverterRecord;
-        _records[index].buffer = [];
-        _records[index].term = term;
+        _records[index]._term = term;
     }
 
     void insert(uint index, ulong anchor) {
-        assert (!(_records[index] is null));
+        assert (_records[index] !is null);
 
-        ulong[] buffer = _records[index].buffer;
+        auto buffer = _records[index]._buffer;
         if (buffer.length > 0) {
             if (buffer[buffer.length - 1] == anchor) {
                 return; // exists
@@ -52,7 +72,7 @@ public:
             assert (buffer[buffer.length - 1] < anchor);
         }
 
-        buffer ~= anchor;
+        _records[index]._buffer ~= anchor;
     }
 
 private:
