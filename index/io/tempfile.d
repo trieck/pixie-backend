@@ -5,10 +5,19 @@ import std.random;
 import std.file;
 import std.path;
 
+static File[] tmpfiles;
+
+static ~this() {
+    foreach(file; tmpfiles) {
+        file.close();
+        remove(file.name());
+    }
+}
+
 class Tempfile
 {
 public:
-    static File create(string prefix, string suffix) {
+    static synchronized File create(string prefix, string suffix) {
         File file;
 
         string name;
@@ -16,8 +25,9 @@ public:
             name = generate(prefix, suffix);
         } while (exists(name));
             
-
         file.open(name, "wb+");
+
+        tmpfiles ~= file;
 
         return file;
     }

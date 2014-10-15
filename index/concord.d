@@ -1,9 +1,8 @@
 module concord;
 
-import std.stdio : File;
-import std.file : remove;
-import io.tempfile;
+import std.stdio;
 import inverter;
+import io.tempfile;
 
 class Concordance
 {
@@ -25,14 +24,10 @@ public:
     string merge() {
         blockSave();
 
-        scope(exit) {
-            foreach(file; _tempfiles) {
-                file.close();
-                remove(file.name());
-            }
-            _tempfiles.length = 0;
-        }
+        if (_tempfiles.length == 1)
+            return _tempfiles[0].name;   // optimization
 
+        // TODO:
         return "";
     }
 
@@ -49,6 +44,7 @@ private:
         File file = Tempfile.create("conc", "dat");
         _tempfiles ~= file;
         _block.write(file.getFP());
+        file.close();
     }
 
     File[] _tempfiles; // temporary files

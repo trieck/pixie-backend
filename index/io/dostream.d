@@ -13,12 +13,17 @@ import std.bitmanip;
 class DataOutputStream
 {
 public:
-    this(FILE* stream) {
-        _stream = stream;
+    // doesn't close stream
+    this(FILE* stream) {        
+        _file = File.wrapFile(stream);
+    }
+
+    this(string filename, string mode) {
+        _file.open(filename, mode);
     }
 
     void writeBytes(byte[] bytes) {
-        auto result = fwrite(bytes.ptr, byte.sizeof, bytes.length, _stream);
+        auto result = fwrite(bytes.ptr, byte.sizeof, bytes.length, _file.getFP());
         if (result != bytes.length)
             throw new Exception("cannot write to stream.");
     }
@@ -90,8 +95,10 @@ public:
         writeBytes(bytearr);
     }
 
-
+    ulong tell() const {
+        return _file.tell();
+    }
 
 private:
-    FILE* _stream;
+    File _file;
 }

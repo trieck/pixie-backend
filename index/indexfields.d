@@ -8,6 +8,11 @@ public:
     }
 
     bool isTopLevel(string field) {
+        foreach(f; _fields) {
+            if (f == field)
+                return true;
+        }
+
         return false;
     }
 

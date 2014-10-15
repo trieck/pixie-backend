@@ -32,7 +32,7 @@ public:
         }
         _index = new Index;
         loadfiles(files);
-        _index.write(db, _fields);
+        _index.write(db, fields);
     }
 
     override void value(string text) {
@@ -87,6 +87,15 @@ private:
         }
 
         return files;
+    }
+
+    bool isTopLevel() {
+        if (_elements.length == 0)
+            return false;
+
+        string field = _elements[$-1];
+
+        return _fields.isTopLevel(field);
     }
 
     Repository _repos;      // repository instance

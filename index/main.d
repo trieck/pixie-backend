@@ -16,6 +16,7 @@ int main(string[] argv)
 
     try {
         XMLIndexer indexer = new XMLIndexer;
+
         indexer.load(argv[1], argv[2..$]);
     } catch (Exception e) {
         stderr.writeln(e.msg);
