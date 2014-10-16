@@ -16,6 +16,10 @@ public:
         _file = File.wrapFile(stream);
     }
 
+    void close() {
+        _file.close();
+    }
+
     this(string filename, string mode) {
         _file.open(filename, mode);
     }
@@ -39,6 +43,17 @@ public:
     void writeLong(long l) {
         auto bytes = nativeToBigEndian(l);
         writeBytes(cast(ubyte[])bytes);
+    }
+
+    ubyte[] read(ubyte[] buf) {
+        return _file.rawRead(buf);
+    }
+
+    ulong readLong() {
+        ubyte[ulong.sizeof] buffer;
+        read(buffer);
+        ulong result = bigEndianToNative!ulong(buffer);
+        return result;
     }
 
     /**
@@ -95,6 +110,10 @@ public:
 
     ulong tell() const {
         return _file.tell();
+    }
+
+    void seek(ulong pos) {
+        _file.seek(pos);
     }
 
 private:

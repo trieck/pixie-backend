@@ -25,6 +25,10 @@ public:
         _file.close();
     }
 
+    ulong tell() const {
+        return _file.tell();
+    }
+
     int peek()
     {
         int c;
@@ -37,6 +41,34 @@ public:
         return c;
     }
 
+    ulong length() {
+        ulong save = tell();
+        
+        seek(0L, SEEK_END);
+        ulong sz = tell();
+
+        seek(save);
+
+        return sz;
+    }
+
+    uint skipBytes(uint n) {
+        if (n == 0) {
+            return 0;
+        }
+
+        ulong pos = tell();
+        ulong len = length();
+        ulong newpos = pos + n;
+        if (newpos > len) {
+            newpos = len;
+        }
+        seek(newpos);
+
+        // return the actual number of bytes skipped
+        return cast(uint) (newpos - pos);
+    }
+
     bool eof() {
         return _file.eof() || peek() == -1;
     }
@@ -45,15 +77,15 @@ public:
         return _file.rawRead(buf);
     }
 
-    short readShort() {
-        ubyte[2] buffer;
+    ushort readShort() {
+        ubyte[ushort.sizeof] buffer;
         read(buffer);
         ushort result = bigEndianToNative!ushort(buffer);
         return result;
     }
 
     uint readInt() {
-        ubyte[4] buffer;
+        ubyte[uint.sizeof] buffer;
         read(buffer);
         uint result = bigEndianToNative!uint(buffer);
         return result;
@@ -123,6 +155,10 @@ public:
         }
 
         return to!string(chararr);
+    }
+
+    void seek(ulong pos, int origin = SEEK_SET) {
+        _file.seek(pos, origin);
     }
 
 private:

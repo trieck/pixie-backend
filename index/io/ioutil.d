@@ -3,6 +3,7 @@ module io.ioutil;
 import io.distream;
 import io.dostream;
 import std.algorithm : min;
+import std.array;
 
 class IOUtil
 {
@@ -30,9 +31,29 @@ public:
             dos.writeBytes(slice);
 
             size -= m;
-        }
-        
+        }        
     }
+
+    /**
+     * Write a continuous series of bytes to output stream
+     * @param os,   the output stream
+     * @param size, the number of bytes to write
+     * @param b,    the byte to write
+     */
+    static void fill(DataOutputStream dos, long size, ubyte b) {
+        ubyte[] buf = new ubyte[BUF_SIZE];
+
+        foreach(by; buf)
+            by = b;
+
+        int m;
+        while (size > 0) {
+            m = cast(int) min(BUF_SIZE, size);
+            dos.writeBytes(buf[0..m]);
+            size -= m;
+        }
+    }
+
 private:
     enum { BUF_SIZE = 16384 }
 }

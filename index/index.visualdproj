@@ -4,7 +4,7 @@
   <obj>0</obj>
   <link>0</link>
   <lib>0</lib>
-  <subsystem>0</subsystem>
+  <subsystem>1</subsystem>
   <multiobj>0</multiobj>
   <singleFileCompilation>0</singleFileCompilation>
   <oneobj>0</oneobj>
@@ -384,10 +384,12 @@
   <File path="anchor.d" />
   <File path="concord.d" />
   <File path="config.d" />
+  <File path="util\dhash64.d" />
   <File path="io\distream.d" />
   <File path="io\dostream.d" />
   <File path="io\fileread.d" />
   <File path="util\hash32.d" />
+  <File path="util\hash64.d" />
   <File path="index.d" />
   <File path="indexfields.d" />
   <File path="inverter.d" />
