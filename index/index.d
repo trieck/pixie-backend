@@ -1,7 +1,9 @@
 module index;
 
 import std.file;
+import io.distream;
 import io.dostream;
+import io.ioutil;
 import concord;
 import repos;
 import indexfields;
@@ -26,22 +28,58 @@ public:
         if (exists(outfile))
             remove(outfile);
 
-        DataOutputStream ofile = new DataOutputStream(outfile, "wb+");
+        DataInputStream dis = new DataInputStream(concordFile, "rb");
+        DataOutputStream dos = new DataOutputStream(outfile, "wb+");
 
         // write file magic number
-        ofile.writeInt(MAGIC_NO);
+        dos.writeInt(MAGIC_NO);
 
         // write the number of index fields
-        ofile.writeInt(cast(int) fields.length);
+        dos.writeInt(cast(int) fields.length);
 
         // write index fields
         foreach(field; fields) {
-            ofile.writeUTF(field);
+            dos.writeUTF(field);
         }
 
         // write the total number of terms
-        long term_count_offset = ofile.tell();
-        ofile.writeInt(0); // not yet known
+        ulong term_count_offset = dos.tell();
+        dos.writeInt(0); // not yet known
+
+        // write the size of the hash table
+        ulong hash_table_size_offset = dos.tell();
+        dos.writeLong(0); // not yet known
+
+        // write the offset to the hash table
+        ulong hash_table_offset = dos.tell();
+        dos.writeLong(0); // not yet known
+
+        // concordance offset
+        ulong concord_offset = dos.tell();
+
+        // write terms & anchors
+        uint n, nterms;
+        string term;
+
+        for (n = 0; !dis.eof(); ++nterms) {
+            term = dis.readUTF();
+
+            // read the anchor list size
+            n = dis.readInt();
+
+            // write the term
+            dos.writeUTF(term);
+
+            // write the anchor list size
+            dos.writeInt(n);
+
+            // transfer the anchor list
+            IOUtil.transfer(dis, dos, n * cast(uint)ulong.sizeof);
+        }
+
+        dis.close();
+
+        // generate the hash table
     }
 
 private:

@@ -7,8 +7,6 @@ import std.bitmanip;
  * Inspired by the Java class of the same name.
  * Allows application to write primitive data types
  * to a stream and use a data input stream to read the data read back in.
- * We do not rely on std.stream here to produce and consume data
- * created by the Java implementation.
  */
 class DataOutputStream
 {
@@ -22,25 +20,25 @@ public:
         _file.open(filename, mode);
     }
 
-    void writeBytes(byte[] bytes) {
-        auto result = fwrite(bytes.ptr, byte.sizeof, bytes.length, _file.getFP());
+    void writeBytes(ubyte[] bytes) {
+        auto result = fwrite(bytes.ptr, ubyte.sizeof, bytes.length, _file.getFP());
         if (result != bytes.length)
             throw new Exception("cannot write to stream.");
     }
 
     void writeShort(short s) {
         auto bytes = nativeToBigEndian(s);
-        writeBytes(cast(byte[])bytes);
+        writeBytes(cast(ubyte[])bytes);
     }
 
     void writeInt(int i) {
         auto bytes = nativeToBigEndian(i);
-        writeBytes(cast(byte[])bytes);
+        writeBytes(cast(ubyte[])bytes);
     }
 
     void writeLong(long l) {
         auto bytes = nativeToBigEndian(l);
-        writeBytes(cast(byte[])bytes);
+        writeBytes(cast(ubyte[])bytes);
     }
 
     /**
@@ -72,7 +70,7 @@ public:
         if (utflen > 65535)
             throw new Exception("encoded string too long.");
 
-        auto bytearr = new byte[utflen+2];
+        auto bytearr = new ubyte[utflen+2];
         auto lenbytes = nativeToBigEndian(cast(ushort)utflen);
 
         bytearr[count++] = lenbytes[0];
@@ -80,15 +78,15 @@ public:
 
         foreach(dchar c; str) {
             if ((c >= 0x0001) && (c <= 0x007F)) {
-                bytearr[count++] = cast(byte) c;
+                bytearr[count++] = cast(ubyte) c;
 
             } else if (c > 0x07FF) {
-                bytearr[count++] = cast(byte) (0xE0 | ((c >> 12) & 0x0F));
-                bytearr[count++] = cast(byte) (0x80 | ((c >>  6) & 0x3F));
-                bytearr[count++] = cast(byte) (0x80 | ((c >>  0) & 0x3F));
+                bytearr[count++] = cast(ubyte) (0xE0 | ((c >> 12) & 0x0F));
+                bytearr[count++] = cast(ubyte) (0x80 | ((c >>  6) & 0x3F));
+                bytearr[count++] = cast(ubyte) (0x80 | ((c >>  0) & 0x3F));
             } else {
-                bytearr[count++] = cast(byte) (0xC0 | ((c >>  6) & 0x1F));
-                bytearr[count++] = cast(byte) (0x80 | ((c >>  0) & 0x3F));
+                bytearr[count++] = cast(ubyte) (0xC0 | ((c >>  6) & 0x1F));
+                bytearr[count++] = cast(ubyte) (0x80 | ((c >>  0) & 0x3F));
             }
         }
 

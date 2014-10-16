@@ -384,6 +384,7 @@
   <File path="anchor.d" />
   <File path="concord.d" />
   <File path="config.d" />
+  <File path="io\distream.d" />
   <File path="io\dostream.d" />
   <File path="io\fileread.d" />
   <File path="util\hash32.d" />
@@ -392,6 +393,7 @@
   <File path="inverter.d" />
   <File path="invrec.d" />
   <File path="invrecs.d" />
+  <File path="io\ioutil.d" />
   <File path="lexer.d" />
   <File path="main.d" />
   <File path="io\pbread.d" />
