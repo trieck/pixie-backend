@@ -9,9 +9,9 @@ module anchor;
  * {FILENUM} {FILEOFFSET} {WORDNUM}
  * ---------DOCID--------|---------
  * <p/>
- * FILENUM 	    : file # in repository (16-bits, 32,767 max number of files)
- * FILEOFFSET	: offset into file where record is located (32-bits, max file size ~2GB)
- * WORDNUM	    : word number of term in field (16-bits, 32,767 max words per field)
+ * FILENUM      : file # in repository (16-bits, 32,767 max number of files)
+ * FILEOFFSET   : offset into file where record is located (32-bits, max file size ~2GB)
+ * WORDNUM      : word number of term in field (16-bits, 32,767 max words per field)
  * DOCID        : The upper 48-bits of the anchor represents the document id.
  */
 class Anchor 

@@ -59,7 +59,7 @@ protected:
     @property size_t position;   // position in input stream
 private:    
     void parse() {
-        int c;
+        int c, save;
         char[] buffer;
         string tag, name;
 
@@ -74,8 +74,10 @@ private:
 
             switch (buffer[0]) {
                 case '/':   // end tag
+                    save = _type;
                     endTag();
-                    endElement();
+                    if (save != EMPTYTAG)
+                        endElement();
                     break;
                 case '!':   // xml comment
                     if (buffer[1] == '-' && buffer[2] == '-') {
