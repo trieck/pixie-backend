@@ -1,8 +1,7 @@
 module index;
 
 import std.file;
-import io.distream;
-import io.dostream;
+import io.dstream;
 import io.ioutil;
 import concord;
 import repos;
@@ -32,8 +31,8 @@ public:
 
         auto outfile = _repos.getIndexPath(db);
 
-        DataInputStream dis = new DataInputStream(concordFile, "rb");
-        DataOutputStream dos = new DataOutputStream(outfile, "wb+");
+        DataStream dis = new DataStream(concordFile, "rb");
+        DataStream dos = new DataStream(outfile, "wb+");
 
         // write file magic number
         dos.writeInt(MAGIC_NO);
@@ -107,7 +106,7 @@ public:
 
         // we need two file pointers to the output file
         // in order to generate the hash table
-        dis = new DataInputStream(outfile, "rb");
+        dis = new DataStream(outfile, "rb");
 
         // seek to the concordance
         dis.seek(concord_offset);

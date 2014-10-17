@@ -36,6 +36,10 @@ public:
     }
 
     override void value(string text) {
+        
+        if (!isTopLevel())
+            return;
+
         text = strip(text);
 
         if (text.length == 0)

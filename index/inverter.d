@@ -4,7 +4,7 @@ import std.stdio;
 import invrecs;
 import util.prime;
 import util.hash32;
-import io.dostream;
+import io.dstream;
 
 class Inverter
 {
@@ -44,7 +44,7 @@ public:
         compact();
         sort();
 
-        DataOutputStream dos = new DataOutputStream(stream);
+        DataStream dos = new DataStream(stream);
 
         for (auto i = 0; i < _count; ++i) {
             term = _records.getTerm(i);

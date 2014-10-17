@@ -1,7 +1,6 @@
 module io.ioutil;
 
-import io.distream;
-import io.dostream;
+import io.dstream;
 import std.algorithm : min;
 import std.array;
 
@@ -15,7 +14,7 @@ public:
      * @param dos,   the output stream
      * @param size, the number of bytes to transfer
      */
-    static void transfer(DataInputStream dis, DataOutputStream dos, int size) {
+    static void transfer(DataStream dis, DataStream dos, int size) {
         ubyte[] buf = new ubyte[BUF_SIZE];
         
         ubyte[] slice;
@@ -36,11 +35,11 @@ public:
 
     /**
      * Write a continuous series of bytes to output stream
-     * @param os,   the output stream
+     * @param dos,  the output stream
      * @param size, the number of bytes to write
      * @param b,    the byte to write
      */
-    static void fill(DataOutputStream dos, long size, ubyte b) {
+    static void fill(DataStream dos, long size, ubyte b) {
         ubyte[] buf = new ubyte[BUF_SIZE];
 
         foreach(by; buf)

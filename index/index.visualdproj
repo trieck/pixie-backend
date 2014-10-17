@@ -385,8 +385,7 @@
   <File path="concord.d" />
   <File path="config.d" />
   <File path="util\dhash64.d" />
-  <File path="io\distream.d" />
-  <File path="io\dostream.d" />
+  <File path="io\dstream.d" />
   <File path="io\fileread.d" />
   <File path="util\hash32.d" />
   <File path="util\hash64.d" />
