@@ -10,7 +10,9 @@ static File[] tmpfiles;
 static ~this() {
     foreach(file; tmpfiles) {
         file.close();
-        remove(file.name());
+        if (exists(file.name())) {
+            remove(file.name());
+        }
     }
 }
 

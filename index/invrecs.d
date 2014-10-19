@@ -72,11 +72,11 @@ public:
 
         auto buffer = _records[index]._buffer;
         if (buffer.length > 0) {
-            if (buffer[buffer.length - 1] == anchor) {
+            if (buffer[$-1] == anchor) {
                 return; // exists
             }
 
-            assert (buffer[buffer.length - 1] < anchor);
+            assert (buffer[$-1] < anchor);
         }
 
         _records[index]._buffer ~= anchor;

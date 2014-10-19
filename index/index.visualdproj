@@ -382,10 +382,13 @@
  </Config>
  <Folder name="index">
   <File path="anchor.d" />
+  <File path="concmerge.d" />
   <File path="concord.d" />
+  <File path="concrecord.d" />
   <File path="config.d" />
   <File path="util\dhash64.d" />
   <File path="io\dstream.d" />
+  <File path="field.d" />
   <File path="io\fileread.d" />
   <File path="util\hash32.d" />
   <File path="util\hash64.d" />

@@ -1,6 +1,7 @@
 module index;
 
 import std.file;
+import std.stdio : File;
 import io.dstream;
 import io.ioutil;
 import concord;
@@ -27,11 +28,11 @@ public:
 
     void write(string db, string[] fields) {
         // merge concordance blocks
-        string concordFile = _concord.merge();
+        File concordFile = _concord.merge();
 
         auto outfile = _repos.getIndexPath(db);
 
-        DataStream dis = new DataStream(concordFile, "rb");
+        DataStream dis = new DataStream(concordFile.name, "rb");
         DataStream dos = new DataStream(outfile, "wb+");
 
         // write file magic number

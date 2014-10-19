@@ -12,6 +12,7 @@ import qparse;
 import lexer;
 import anchor;
 import indexfields;
+import field;
 
 class XMLIndexer : QParser
 {
@@ -37,7 +38,7 @@ public:
 
     override void value(string text) {
         
-        if (!isTopLevel())
+        if (_fieldNum == -1 || !isTopLevel())
             return;
 
         text = strip(text);
@@ -46,27 +47,42 @@ public:
             return; // whitespace
 
         auto field = _elements[$-1];
+        auto wordNum = field.wordCount;
 
         Lexer lexer = new Lexer(new StringReader(text));
         ulong anchor;
 
         string term, tok;
-        for (ushort i = 0; ((tok = lexer.getToken()).length) != 0; ++i) {
-            term = format("%s:%s", field, tok);
-            anchor = Anchor.makeAnchorID(_filenum, _offset, i);
+        while ((tok = lexer.getToken()).length != 0) {
+            term = format("%s:%s", field.name(), tok);
+            anchor = Anchor.makeAnchorID(_filenum, _recOffset, cast(ushort)_fieldNum, wordNum++);
             _index.insert(term, anchor);
         }
+
+        field.wordCount = wordNum;
     }
 
     override void startElement(string name, string tag) {
-        _elements ~= name;
+        _elements ~= new Field(name);
         if (name == "record") {
-            _offset = cast(uint) max(0, position - tag.length);
+            _recOffset = cast(uint) max(0, position - tag.length);
+            _fieldNum = -1;
+            assert (_recOffset < (1 << Anchor.OFFSET_BITS));
+        } else if (_recOffset > 0) {
+            if (isTopLevel()) {
+                _fieldNum++;
+                assert(_fieldNum < (1 << Anchor.FIELDNUM_BITS));
+            }
         }
     }
 
     override void endElement() {
-       --_elements.length;
+        auto field = _elements[$-1];
+        if (field.name == "record") {
+            _recOffset = 0;
+            _fieldNum = -1;
+        }
+        --_elements.length;
     }
 
 private:
@@ -97,15 +113,16 @@ private:
         if (_elements.length == 0)
             return false;
 
-        string field = _elements[$-1];
+        Field field = _elements[$-1];
 
-        return _fields.isTopLevel(field);
+        return _fields.isTopLevel(field.name);
     }
 
     Repository _repos;      // repository instance
     Index _index;           // index instance
-    ushort _filenum;        // current file number while indexing
-    uint _offset;           // offset into current file
-    string[] _elements;     // stack of elements seen
+    ubyte _filenum;         // current file number while indexing
+    uint _recOffset;        // record offset into current file
+    int _fieldNum;          // current top-level field number
+    Field[] _elements;      // stack of elements seen
     IndexFields _fields;    // set of top-level fields for indexing
 }

@@ -2,6 +2,7 @@ module concord;
 
 import std.stdio;
 import inverter;
+import concmerge;
 import io.tempfile;
 
 class Concordance
@@ -18,17 +19,17 @@ public:
             blockSave();
         } 
 
-        _block.insert(term, anchor);        
+        _block.insert(term, anchor);
     }
 
-    string merge() {
+    File merge() {
         blockSave();
 
         if (_tempfiles.length == 1)
-            return _tempfiles[0].name;   // optimization
+            return _tempfiles[0];   // optimization
 
-        // TODO:
-        return "";
+        ConcordMerge merger = new ConcordMerge();
+        return merger.merge(_tempfiles);
     }
 
 private:
