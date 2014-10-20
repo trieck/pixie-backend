@@ -1,4 +1,4 @@
-module config;
+module content.config;
 
 import std.json;
 import std.file;

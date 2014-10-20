@@ -1,6 +1,6 @@
-module repos;
+module content.repos;
 
-import config;
+import content.config;
 import std.path;
 import std.file;
 import std.string : format;

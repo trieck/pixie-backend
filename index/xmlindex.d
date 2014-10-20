@@ -6,7 +6,7 @@ import std.algorithm;
 import std.string;
 import io.fileread;
 import io.strread;
-import repos;
+import content.repos;
 import index;
 import qparse;
 import lexer;

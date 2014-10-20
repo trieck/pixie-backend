@@ -5,7 +5,7 @@ import std.stdio : File;
 import io.dstream;
 import io.ioutil;
 import concord;
-import repos;
+import content.repos;
 import indexfields;
 import util.prime;
 import util.dhash64;
