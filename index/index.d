@@ -5,6 +5,7 @@ import std.stdio : File;
 import io.dstream;
 import io.ioutil;
 import concord;
+import content.defs;
 import content.repos;
 import indexfields;
 import util.prime;
@@ -36,7 +37,7 @@ public:
         DataStream dos = new DataStream(outfile, "wb+");
 
         // write file magic number
-        dos.writeInt(MAGIC_NO);
+        dos.writeInt(INDEX_MAGIC_NO);
 
         // write the number of index fields
         dos.writeInt(cast(int) fields.length);
@@ -148,7 +149,6 @@ public:
     }
 
 private:
-    enum { MAGIC_NO = 0xc001d00d }  // file magic number
     Repository _repos;               // content repository
     Concordance _concord;            // term concordance    
 }

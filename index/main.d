@@ -20,7 +20,7 @@ int main(string[] argv)
         indexer.load(argv[1], argv[2..$]);
     } catch (Exception e) {
         stderr.writeln(e.msg);
-        exit(2);
+        exit(1);
     }
 
     writef("    elapsed time %s\n", t);

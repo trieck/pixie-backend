@@ -14,6 +14,13 @@ Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "io", "io\io.visualdproj", "
 EndProject
 Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "content", "content\content.visualdproj", "{BA5F1E71-02FA-46D2-9A13-F773132B0B7C}"
 EndProject
+Project("{002A2DE9-8BB6-484D-9802-7E4AD4084715}") = "chkidx", "chkidx\chkidx.visualdproj", "{BC40AE18-2B18-4847-93FD-1BEA0CC1DBD9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EFAE0060-0175-4B1F-BD7D-E5EFF1CB1319} = {EFAE0060-0175-4B1F-BD7D-E5EFF1CB1319}
+		{BA5F1E71-02FA-46D2-9A13-F773132B0B7C} = {BA5F1E71-02FA-46D2-9A13-F773132B0B7C}
+		{2F3FA9F5-FF9A-4990-9BDA-E88EB3B2C7E4} = {2F3FA9F5-FF9A-4990-9BDA-E88EB3B2C7E4}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -54,6 +61,12 @@ Global
 		{BA5F1E71-02FA-46D2-9A13-F773132B0B7C}.Release|Win32.Build.0 = Release|Win32
 		{BA5F1E71-02FA-46D2-9A13-F773132B0B7C}.Release|x64.ActiveCfg = Release_x64|x64
 		{BA5F1E71-02FA-46D2-9A13-F773132B0B7C}.Release|x64.Build.0 = Release_x64|x64
+		{BC40AE18-2B18-4847-93FD-1BEA0CC1DBD9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BC40AE18-2B18-4847-93FD-1BEA0CC1DBD9}.Debug|Win32.Build.0 = Debug|Win32
+		{BC40AE18-2B18-4847-93FD-1BEA0CC1DBD9}.Debug|x64.ActiveCfg = Debug|Win32
+		{BC40AE18-2B18-4847-93FD-1BEA0CC1DBD9}.Release|Win32.ActiveCfg = Release|Win32
+		{BC40AE18-2B18-4847-93FD-1BEA0CC1DBD9}.Release|Win32.Build.0 = Release|Win32
+		{BC40AE18-2B18-4847-93FD-1BEA0CC1DBD9}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

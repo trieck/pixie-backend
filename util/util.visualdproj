@@ -381,6 +381,7 @@
   <filesToClean>*.obj;*.cmd;*.build;*.json;*.dep</filesToClean>
  </Config>
  <Folder name="util">
+  <File path="common.d" />
   <File path="dhash64.d" />
   <File path="hash32.d" />
   <File path="hash64.d" />
