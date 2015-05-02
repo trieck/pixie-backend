@@ -4,6 +4,7 @@ import std.stdio : File;
 import std.random;
 import std.file;
 import std.path;
+import std.format;
 
 static File[] tmpfiles;
 
